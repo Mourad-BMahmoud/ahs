@@ -50,6 +50,35 @@ export function runForm(opts) {
         return;
       }
 
+      // API: save LLM config to .env
+      if (req.method === "POST" && req.url === "/api/config") {
+        const body = await readBody(req, MAX_BODY);
+        const { provider, apiKey } = JSON.parse(body);
+        if (!provider || !apiKey) {
+          res.statusCode = 400;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: "Provider and API key are required." }));
+          return;
+        }
+        const envPath = join(cwd, ".env");
+        const envContent = `AHS_PROVIDER=${provider}\nAHS_API_KEY=${apiKey}\nAHS_MODEL=\n`;
+        writeFileSync(envPath, envContent, "utf-8");
+        // Update process.env so it takes effect immediately
+        process.env.AHS_PROVIDER = provider;
+        process.env.AHS_API_KEY = apiKey;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ ok: true }));
+        return;
+      }
+
+      // API: check LLM config status
+      if (req.method === "GET" && req.url === "/api/config") {
+        const configured = !!(process.env.AHS_PROVIDER && process.env.AHS_API_KEY);
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ configured, provider: process.env.AHS_PROVIDER || "" }));
+        return;
+      }
+
       // API: save ahs.json
       if (req.method === "POST" && req.url === "/api/ahs") {
         const body = await readBody(req, MAX_BODY);

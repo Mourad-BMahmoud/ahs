@@ -195,6 +195,19 @@ body {
 #fill-filename { font-size: 13px; color: var(--text-muted); }
 #fill-status { font-size: 13px; margin-top: 8px; }
 
+/* ─── LLM config ─── */
+.llm-config {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+.llm-config strong { display: block; font-size: 14px; margin-bottom: 2px; }
+.llm-config p { font-size: 13px; color: var(--text-muted); }
+.llm-config .connected { color: var(--success); font-weight: 500; }
+
 /* ─── Generate step ─── */
 .generate-summary {
   background: var(--surface-raised);

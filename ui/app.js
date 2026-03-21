@@ -727,6 +727,49 @@ function updateAllBadges() {
   }
 }
 
+// ─── LLM config ─────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("/api/config");
+    const data = await res.json();
+    if (data.configured) {
+      const status = document.getElementById("llm-status");
+      if (status) { status.textContent = `Connected (${data.provider})`; status.className = "connected"; }
+      const sel = document.getElementById("llm-provider");
+      if (sel) sel.value = data.provider;
+    }
+  } catch {}
+});
+
+async function saveLLMConfig() {
+  const provider = document.getElementById("llm-provider").value;
+  const apiKey = document.getElementById("llm-key").value.trim();
+  const status = document.getElementById("llm-status");
+
+  if (!provider || !apiKey) { status.textContent = "Select a provider and enter your key."; status.style.color = "var(--danger)"; return; }
+
+  try {
+    const res = await fetch("/api/config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ provider, apiKey })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      status.textContent = `Connected (${provider})`;
+      status.style.color = "var(--success)";
+      status.className = "connected";
+      document.getElementById("llm-key").value = "";
+    } else {
+      status.textContent = data.error;
+      status.style.color = "var(--danger)";
+    }
+  } catch (err) {
+    status.textContent = err.message;
+    status.style.color = "var(--danger)";
+  }
+}
+
 // ─── Fill from job posting ──────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   const fileInput = document.getElementById("fill-file");

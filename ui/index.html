@@ -50,8 +50,29 @@
             <button class="btn btn-primary" id="fill-btn" onclick="runFill()">Extract & pre-fill</button>
           </div>
           <div id="fill-status" style="display:none"></div>
-          <div class="fill-note">
-            Needs an LLM key. Set <code>AHS_PROVIDER</code> and <code>AHS_API_KEY</code> in your <code>.env</code>.
+        </div>
+
+        <div class="llm-config" id="llm-config">
+          <strong>LLM Connection</strong>
+          <p>Required for pre-fill and agent generation. Your key stays local.</p>
+          <div class="row" style="margin-top:12px">
+            <div class="field-group" style="flex:1">
+              <label>Provider</label>
+              <select id="llm-provider">
+                <option value="">Select...</option>
+                <option value="anthropic">Anthropic (Claude)</option>
+                <option value="openai">OpenAI (GPT)</option>
+                <option value="openrouter">OpenRouter</option>
+              </select>
+            </div>
+            <div class="field-group" style="flex:2">
+              <label>API Key</label>
+              <input type="password" id="llm-key" placeholder="sk-...">
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+            <button class="btn btn-sm" onclick="saveLLMConfig()">Save</button>
+            <span id="llm-status" style="font-size:12px;color:var(--text-muted)"></span>
           </div>
         </div>
 
