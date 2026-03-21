@@ -1,0 +1,20 @@
+{
+  "name": "ahs-cli",
+  "version": "0.1.0",
+  "description": "Agent Hiring Standard — generate OpenClaw workspaces from job postings",
+  "bin": {
+    "ahs": "./bin/ahs.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "mammoth": "^1.8.0",
+    "openai": "^4.85.0",
+    "pdf-parse": "^1.1.1"
+  }
+}

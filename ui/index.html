@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layoff.ai -- Hire Your Next AI Agent</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wizard">
+
+  <!-- Progress bar -->
+  <header class="wizard-header">
+    <div class="wizard-brand">Layoff.ai</div>
+    <div class="wizard-steps" id="wizard-steps">
+      <div class="step-dot active" data-step="0"><span>Start</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="1"><span>Role</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="2"><span>You</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="3"><span>Red Lines</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="4"><span>Skills</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="5"><span>Rules</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="6"><span>Knowledge</span></div>
+      <div class="step-line"></div>
+      <div class="step-dot" data-step="7"><span>Generate</span></div>
+    </div>
+  </header>
+
+  <main class="wizard-body">
+
+    <!-- ═══════════ STEP 0: JOB POSTING ═══════════ -->
+    <div class="step active" id="step-0">
+      <div class="step-center">
+        <h1 class="step-hero">Hire your next AI agent.</h1>
+        <p class="step-subtitle">Paste a job posting and we'll build the brief. Or start from scratch.</p>
+
+        <div class="fill-card">
+          <textarea id="fill-text" placeholder="Paste the job posting text here..." rows="8"></textarea>
+          <div class="fill-actions">
+            <label class="btn">
+              Upload file (.txt, .pdf, .docx)
+              <input type="file" id="fill-file" accept=".txt,.md,.pdf,.docx" style="display:none">
+            </label>
+            <span id="fill-filename"></span>
+            <button class="btn btn-primary" id="fill-btn" onclick="runFill()">Extract & pre-fill</button>
+          </div>
+          <div id="fill-status" style="display:none"></div>
+          <div class="fill-note">
+            Needs an LLM key. Set <code>AHS_PROVIDER</code> and <code>AHS_API_KEY</code> in your <code>.env</code>.
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <span></span>
+          <div style="display:flex;gap:12px;align-items:center">
+            <button class="btn" onclick="goStep(1)">Skip -- start from scratch</button>
+            <button class="btn btn-primary" onclick="goStep(1)">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 1: THE ROLE ═══════════ -->
+    <div class="step" id="step-1">
+      <div class="step-content">
+        <h2 class="step-title">The Role</h2>
+        <p class="step-desc">What's the job? What does this agent own, and where does its authority end?</p>
+
+        <div class="field-group">
+          <label>Job Title <span class="req">*</span></label>
+          <div class="helper">The title you'd put on a job board. Be specific -- "Lead Qualifier" beats "Helper."</div>
+          <input type="text" id="f-1.1" placeholder="Inbound Lead Qualifier" maxlength="80">
+          <div class="char-count"><span class="count">0</span>/80</div>
+        </div>
+
+        <div class="field-group">
+          <label>Mission <span class="req">*</span></label>
+          <div class="helper">One sentence. Why does this role exist?</div>
+          <textarea id="f-1.2" placeholder="Make sure every inbound lead gets a personalized response within 2 hours, qualified against our ICP, and either booked for a demo or declined with a relevant resource." maxlength="500"></textarea>
+          <div class="char-count"><span class="count">0</span>/500</div>
+        </div>
+
+        <div class="field-group">
+          <label>Responsibilities <span class="req">*</span></label>
+          <div class="helper">What does this agent actually do, day in day out?</div>
+          <textarea id="f-1.3" class="tall" placeholder="- Qualify every new inbound lead within 2 hours&#10;- Research the company (website, LinkedIn, size, fit)&#10;- Score against our ICP checklist&#10;- Draft personalized outreach for hot leads&#10;- Update CRM with scores, notes, and next steps&#10;- Flag competitor mentions to the sales channel immediately"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Hard Boundaries <span class="req">*</span></label>
+          <div class="helper">Where does this agent's authority stop?</div>
+          <textarea id="f-1.4" class="tall" placeholder="- Never promise timelines or delivery dates to prospects&#10;- Never discount or discuss pricing beyond what's on the public page&#10;- No access to billing -- read-only on everything&#10;- Don't contact existing customers, only new leads&#10;- Never share one prospect's info with another"></textarea>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(0)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(2)">Next: About You</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 2: ABOUT YOU ═══════════ -->
+    <div class="step" id="step-2">
+      <div class="step-content">
+        <h2 class="step-title">About You</h2>
+        <p class="step-desc">Your agent needs to know who it works for and how your business operates.</p>
+
+        <div class="row">
+          <div class="field-group">
+            <label>Your Name <span class="req">*</span></label>
+            <div class="helper">How your agent addresses you.</div>
+            <input type="text" id="f-2.1" placeholder="Sarah Chen">
+          </div>
+          <div class="field-group">
+            <label>Your Title <span class="req">*</span></label>
+            <div class="helper">So it knows your authority level.</div>
+            <input type="text" id="f-2.2" placeholder="Head of Operations">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field-group">
+            <label>Company <span class="req">*</span></label>
+            <input type="text" id="f-2.3" placeholder="Meridian Growth Partners">
+          </div>
+          <div class="field-group">
+            <label>Industry <span class="req">*</span></label>
+            <div class="helper">Closest match.</div>
+            <select id="f-2.4">
+              <option value="">Select...</option>
+              <option>Accounting & Finance</option><option>Advertising & Marketing</option>
+              <option>Agriculture</option><option>Architecture & Design</option>
+              <option>Automotive</option><option>Banking</option>
+              <option>Biotechnology</option><option>Construction</option>
+              <option>Consulting</option><option>E-commerce & Retail</option>
+              <option>Education</option><option>Energy & Utilities</option>
+              <option>Engineering</option><option>Entertainment & Media</option>
+              <option>Environmental Services</option><option>Fashion & Apparel</option>
+              <option>Food & Beverage</option><option>Government</option>
+              <option>Healthcare</option><option>Hospitality & Tourism</option>
+              <option>Human Resources</option><option>Insurance</option>
+              <option>IT & Software</option><option>Legal</option>
+              <option>Logistics & Supply Chain</option><option>Manufacturing</option>
+              <option>Mining</option><option>Nonprofit</option>
+              <option>Pharmaceuticals</option><option>Real Estate</option>
+              <option>Recruiting & Staffing</option><option>Research</option>
+              <option>SaaS</option><option>Sports & Recreation</option>
+              <option>Telecommunications</option><option>Transportation</option>
+              <option>Venture Capital & Private Equity</option>
+              <option value="__other">Other</option>
+            </select>
+            <input type="text" id="f-2.4-other" placeholder="Your industry" style="display:none;margin-top:8px">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field-group">
+            <label>Team Size <span class="req">*</span></label>
+            <select id="f-2.5">
+              <option value="">Select...</option>
+              <option>Just me</option><option>2-10 employees</option>
+              <option>11-50 employees</option><option>51-200 employees</option>
+              <option>201-1000 employees</option><option>1000+ employees</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Timezone <span class="req">*</span></label>
+            <select id="f-2.7"></select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>What Your Business Does <span class="req">*</span></label>
+          <div class="helper">Explain it like you're briefing a smart new hire at lunch.</div>
+          <textarea id="f-2.6" class="tall" placeholder="B2B SaaS for project management, targeting mid-size construction firms. ~200 customers, $3M ARR, 15 people. Just raised Series A."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Your Working Hours <span class="req">*</span></label>
+          <div class="helper">Your agent works within this window.</div>
+          <div class="time-row">
+            <input type="time" id="f-2.8-start" value="09:00">
+            <span>to</span>
+            <input type="time" id="f-2.8-end" value="18:00">
+          </div>
+          <div class="day-toggles" id="day-toggles">
+            <div class="day-toggle on" data-day="Monday">Mon</div>
+            <div class="day-toggle on" data-day="Tuesday">Tue</div>
+            <div class="day-toggle on" data-day="Wednesday">Wed</div>
+            <div class="day-toggle on" data-day="Thursday">Thu</div>
+            <div class="day-toggle on" data-day="Friday">Fri</div>
+            <div class="day-toggle" data-day="Saturday">Sat</div>
+            <div class="day-toggle" data-day="Sunday">Sun</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Tools <span class="req">*</span></label>
+          <div class="helper">Every tool this agent needs access to.</div>
+          <div id="tools-grid"></div>
+          <input type="text" id="f-2.9-other" placeholder="Others not listed (comma-separated)" style="margin-top:8px">
+        </div>
+
+        <div class="field-group">
+          <label>Who Reviews Output <span class="req">*</span></label>
+          <div class="helper">Who catches mistakes? If it's you, say so.</div>
+          <div class="row">
+            <input type="text" id="f-2.10-name" placeholder="Me (Sarah Chen)" style="flex:3">
+            <select id="f-2.10-style" style="flex:2">
+              <option value="">Review style...</option>
+              <option>Reviews everything before it goes out</option>
+              <option>Spot-checks occasionally</option>
+              <option>Only reviews flagged items</option>
+              <option>No review -- works independently</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Communication Channel <span class="req">*</span></label>
+          <div class="helper">Where your agent reaches you.</div>
+          <div class="channel-group" id="channel-group">
+            <div class="channel-btn" data-val="Telegram">Telegram</div>
+            <div class="channel-btn" data-val="Slack">Slack</div>
+            <div class="channel-btn" data-val="WhatsApp">WhatsApp</div>
+            <div class="channel-btn" data-val="Discord">Discord</div>
+            <div class="channel-btn" data-val="Microsoft Teams">Teams</div>
+            <div class="channel-btn" data-val="iMessage">iMessage</div>
+            <div class="channel-btn" data-val="Signal">Signal</div>
+            <div class="channel-btn" data-val="__other">Other</div>
+          </div>
+          <input type="text" id="f-2.11-other" placeholder="Which one?" style="display:none">
+        </div>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(1)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(3)">Next: Red Lines</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 3: RED LINES ═══════════ -->
+    <div class="step" id="step-3">
+      <div class="step-content">
+        <h2 class="step-title">Red Lines</h2>
+        <p class="step-desc">This section makes or breaks your agent. Specific failures create the strongest guardrails.</p>
+
+        <div class="field-group">
+          <label>Dealbreakers <span class="req">*</span></label>
+          <div class="helper">Firing offenses. If this happens even once, trust is gone. Be brutally specific.</div>
+          <textarea id="f-3.1" class="tall" placeholder="- Sending a report to the wrong client -- mixing up client data is unforgivable&#10;- Using outdated pricing (changes quarterly, old numbers have cost us deals)&#10;- Making up an answer instead of saying 'let me check'&#10;- Dismissive or defensive tone with a customer, ever&#10;- Sharing any client's data with another client, even anonymously"></textarea>
+          <div class="guidance">"Don't make errors" is useless. "Never send a proposal with the wrong client name -- this happened twice last year and we lost both clients" is gold.</div>
+        </div>
+
+        <div class="field-group">
+          <label>Acceptable Mistakes <span class="req">*</span></label>
+          <div class="helper">Not everything is a firing offense. What's forgivable? This prevents your agent from freezing up.</div>
+          <textarea id="f-3.2" class="tall" placeholder="- Formatting inconsistencies in internal docs (not client-facing)&#10;- Slightly slow responses (same day is fine, just not hours late)&#10;- Asking me something it could've figured out -- better safe than sorry&#10;- Small grammar mistakes in first drafts that get caught in review&#10;- Flagging something as urgent when it wasn't -- caution is fine"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Horror Stories <span style="color:var(--amber);font-size:12px;margin-left:4px">Strongly recommended</span></label>
+          <div class="helper">Real stories of this role going wrong. These become the strongest guardrails.</div>
+          <textarea id="f-3.3" class="tall" placeholder="Our VA sent Client A's monthly report with Client B's revenue numbers in it. Client A saw another company's financials and nearly terminated.&#10;&#10;A support rep told a customer a bug would be fixed 'by end of week' without checking with engineering. Fix took 3 weeks. Customer churned."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Confidentiality <span class="req">*</span></label>
+          <div class="helper">What's off-limits? What should never be shared, and with whom?</div>
+          <textarea id="f-3.4" class="tall" placeholder="- Client data is siloed -- never reference one client's data when working on another&#10;- Internal pricing and discount tiers: confidential, never share&#10;- Revenue, churn, financial metrics: internal only&#10;- Unreleased features and draft strategies: never mention externally"></textarea>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(2)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(4)">Next: Skills</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 4: SKILLS ═══════════ -->
+    <div class="step" id="step-4">
+      <div class="step-content">
+        <h2 class="step-title">Skills</h2>
+        <p class="step-desc">Each skill is a repeatable business process. Break the job into 2-6 concrete skills.</p>
+
+        <div id="skills-container"></div>
+        <button class="btn" id="add-skill-btn" onclick="addSkill()">+ Add skill</button>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(3)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(5)">Next: Operating Rules</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 5: OPERATING RULES ═══════════ -->
+    <div class="step" id="step-5">
+      <div class="step-content">
+        <h2 class="step-title">Operating Rules</h2>
+        <p class="step-desc">How this agent thinks, talks, decides, and reports back to you.</p>
+
+        <div class="field-group">
+          <label>Tone <span class="req">*</span></label>
+          <div class="helper">How should this agent sound? Pick 2-5.</div>
+          <div class="chip-grid" id="tone-chips"></div>
+          <div class="char-count" id="tone-count">0 of 2-5 selected</div>
+          <textarea id="f-5.1-text" placeholder="Sound like a sharp colleague, not a corporate chatbot. Use 'we' when talking about the company." style="margin-top:8px"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Autonomy Level <span class="req">*</span></label>
+          <div class="helper">How much rope does your agent get?</div>
+          <div class="radio-cards" id="decision-cards">
+            <div class="radio-card" data-val="Ask first"><strong>Ask first</strong><span>Checks with you before every action.</span></div>
+            <div class="radio-card" data-val="Small decisions alone"><strong>Small decisions alone</strong><span>Handles routine work independently. Asks about anything new or high-stakes.</span></div>
+            <div class="radio-card" data-val="Act, then inform"><strong>Act, then inform</strong><span>Takes action, then tells you what it did.</span></div>
+            <div class="radio-card" data-val="Full autonomy"><strong>Full autonomy</strong><span>Handles everything in scope. Only escalates problems it can't solve.</span></div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Daily Schedule <span class="req">*</span></label>
+          <div class="helper">What does a typical day look like, start to finish?</div>
+          <textarea id="f-5.3" class="tall" placeholder="9:00 AM -- Morning sweep: process overnight messages, handle urgent items&#10;&#10;9:30 AM-12:00 PM -- Main focus block&#10;&#10;4:30 PM -- End-of-day wrap: send me a summary"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Escalation Triggers <span class="req">*</span></label>
+          <div class="helper">When should this agent stop everything and come to you?</div>
+          <textarea id="f-5.4" class="tall" placeholder="- Client threatens to leave or expresses serious dissatisfaction&#10;- Anything touching legal, contracts, or pricing decisions&#10;- Unsure whether something fits scope -- don't guess, ask"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Success Metrics <span class="req">*</span></label>
+          <div class="helper">How do you know this agent is doing well? 3-5 concrete metrics.</div>
+          <textarea id="f-5.5" placeholder="- Response time: under 2 hours&#10;- Accuracy: less than 5% error rate&#10;- Weekly report: delivered Monday 9am, zero errors"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Downtime Behavior <span class="req">*</span></label>
+          <div class="helper">Inbox empty, tasks done. What now?</div>
+          <div class="radio-cards" id="silence-cards">
+            <div class="radio-card" data-val="Proactive check-ins"><strong>Stay productive</strong><span>Look for improvements, clean up data, prep for upcoming work.</span></div>
+            <div class="radio-card" data-val="Ask me"><strong>Ask you</strong><span>Checks in when everything's done.</span></div>
+            <div class="radio-card" data-val="Stand by quietly"><strong>Stand by</strong><span>Waits quietly. No busywork.</span></div>
+            <div class="radio-card" data-val="__other"><strong>Custom</strong><span>You define it.</span></div>
+          </div>
+          <textarea id="f-5.6-other" placeholder="What should it do when there's nothing to do?" style="display:none;margin-top:8px"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Reporting <span class="req">*</span></label>
+          <div class="helper">How often do you want updates, and what should they include?</div>
+          <select id="f-5.7-freq">
+            <option value="">Frequency...</option>
+            <option>Daily</option><option>Twice weekly</option>
+            <option>Weekly</option><option>Only when something important happens</option>
+          </select>
+          <textarea id="f-5.7-content" placeholder="End-of-day: what got done, what's pending, anything that needs my attention. 5-10 bullets max." style="margin-top:8px"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Growth Areas</label>
+          <div class="helper">What should this agent learn and improve at over time?</div>
+          <textarea id="f-5.8" placeholder="Get better at pattern recognition -- which leads are genuine vs. kicking tires."></textarea>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(4)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(6)">Next: Knowledge Base</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 6: KNOWLEDGE BASE ═══════════ -->
+    <div class="step" id="step-6">
+      <div class="step-content">
+        <h2 class="step-title">Knowledge Base</h2>
+        <p class="step-desc">Optional. Context and documents your agent needs to do its job right.</p>
+
+        <div class="field-group">
+          <label>Compliance & Regulations</label>
+          <div class="helper">Laws, industry rules, or internal policies this agent must follow.</div>
+          <textarea id="f-6.1" placeholder="EU customer data = GDPR applies. No personal data outside approved systems."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Frameworks & Models</label>
+          <div class="helper">Scoring rubrics, qualification frameworks, decision models.</div>
+          <textarea id="f-6.2" placeholder="BANT framework for lead qualification. See uploaded scoring rubric."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Context Documents</label>
+          <div class="helper">Product sheets, competitor analysis, personas -- anything that makes your agent smarter.</div>
+          <textarea id="f-6.3" placeholder="Product one-pager, competitor comparison sheet, ICP persona doc."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Reference Files</label>
+          <div class="helper">Upload the actual documents. SOPs, templates, frameworks. These ship with your agent.</div>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="ref-files" multiple accept=".pdf,.docx,.txt,.md,.xlsx,.csv,.png,.jpg">
+            <div id="upload-list" style="margin-top:8px;font-size:13px;color:var(--text-secondary)"></div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Anything Else</label>
+          <div class="helper">Context that doesn't fit above but matters.</div>
+          <textarea id="f-6.4" placeholder="Rebranding in Q2. Biggest client is Thornton Construction -- they get priority on everything."></textarea>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn" onclick="goStep(5)">Back</button>
+          <button class="btn btn-primary" onclick="goStep(7)">Next: Generate Agent</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 7: GENERATE ═══════════ -->
+    <div class="step" id="step-7">
+      <div class="step-center">
+        <div id="generate-form">
+          <h2 class="step-title">Generate your agent</h2>
+          <p class="step-desc">Everything's filled. Hit generate and we'll build your agent workspace.</p>
+
+          <div class="field-group" style="max-width:500px">
+            <label>Output folder</label>
+            <div class="helper">Where to save the workspace. Leave blank for current directory.</div>
+            <input type="text" id="output-dir" placeholder="(current directory)">
+          </div>
+
+          <div class="generate-summary" id="generate-summary"></div>
+
+          <div style="margin-top:24px">
+            <button class="btn" onclick="goStep(6)" style="margin-right:12px">Back</button>
+            <button class="btn btn-primary btn-lg" id="generate-btn" onclick="runConvert()">Generate Agent</button>
+          </div>
+        </div>
+
+        <div id="generate-loading" style="display:none">
+          <div class="loading-spinner"></div>
+          <h2 class="step-title" style="margin-top:24px">Building your agent...</h2>
+          <p class="step-desc" id="generate-status">Sending to LLM. This takes 30-90 seconds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STEP 8: DONE ═══════════ -->
+    <div class="step" id="step-8">
+      <div class="step-center">
+        <div class="done-icon">&#10003;</div>
+        <h2 class="step-title">Your agent is ready.</h2>
+        <p class="step-desc" id="done-path"></p>
+
+        <div class="done-files" id="done-files"></div>
+
+        <div class="done-section">
+          <h3>Deploy on OpenClaw</h3>
+          <ol>
+            <li>Move the workspace folder into your OpenClaw agent directory</li>
+            <li>Register the agent: the INSTALL.md inside the folder guides the setup</li>
+            <li>Your installing agent will connect the tools, set up the schedule, and run the first handshake</li>
+          </ol>
+        </div>
+
+        <div class="done-cta">
+          <p>Want hand-crafted agents built on our proprietary AHS by our team?</p>
+          <a href="https://layoff.ai" target="_blank" class="btn btn-primary btn-lg">Visit Layoff.ai</a>
+        </div>
+
+        <div style="margin-top:24px">
+          <button class="btn" onclick="location.reload()">Start over</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="save-status hidden" id="save-status">Saved</div>
+
+<script src="app.js"></script>
+</body>
+</html>
