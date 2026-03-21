@@ -46,7 +46,7 @@ Before any fields, the form opens with this context block. **This is static — 
 
 ---
 
-## Section 1 — The Role
+## Section 1 — Role Definition
 
 *Section intro shown to user (display as a section header card):*
 > Describe the job. What does this employee do, and what should they never do?
@@ -151,7 +151,7 @@ Before any fields, the form opens with this context block. **This is static — 
 
 ---
 
-## Section 2 — About You
+## Section 2 — Employer Profile
 
 *Section intro shown to user:*
 > Tell us about yourself and your business. Your employee needs to understand who they're working for and how your company operates.
@@ -492,7 +492,7 @@ Validation: optional, free-text, no min length.
 
 ---
 
-## Section 3 — What Bad Looks Like
+## Section 3 — Critical Failures
 
 *Section intro shown to user (display prominently — this section is emphasized):*
 
@@ -589,7 +589,7 @@ We also had a situation where a support rep promised a customer that a bug would
 
 ---
 
-## Section 4 — Skills
+## Section 4 — Core Skills
 
 *Section intro shown to user:*
 > Now let's define the specific skills your employee needs. Each skill is a business process that will be built into a skill document your employee can execute. You'll define the process, quality bar, and failure modes -- the platform builds these into executable skill files.
@@ -747,7 +747,7 @@ We also had a situation where a support rep promised a customer that a bug would
 
 ---
 
-## Section 5 — Working Style
+## Section 5 — Operating Model
 
 *Section intro shown to user:*
 > How should your employee communicate, make decisions, and manage their day? This shapes their personality and operating rhythm.
@@ -1029,11 +1029,11 @@ After completing all sections, the user sees a summary view. **Build this as a d
 
 > **Review your hiring standard**
 >
-> Section 1 — The Role: ✅ Complete
-> Section 2 — About You: ✅ Complete
-> Section 3 — What Bad Looks Like: ✅ Complete (⭐ Most important)
-> Section 4 — Skills: ✅ 3 skills defined
-> Section 5 — Working Style: ✅ Complete
+> Section 1 — Role Definition: ✅ Complete
+> Section 2 — Employer Profile: ✅ Complete
+> Section 3 — Critical Failures: ✅ Complete (⭐ Most important)
+> Section 4 — Core Skills: ✅ 3 skills defined
+> Section 5 — Operating Model: ✅ Complete
 > Section 6 — Domain Knowledge: ⚠️ Optional fields empty
 >
 > **Attachments:** 6 files uploaded (3 onboarding docs, 2 per-skill references, 1 framework)
@@ -1062,37 +1062,37 @@ For use by the Filler prompt and Converter prompt. **This table is the contract 
 | 1.3 | Role | Key Responsibilities | textarea | Yes | ✅ Yes |
 | 1.4 | Role | Boundaries | textarea | Yes | ✅ Partially |
 | 1.5 | Role | Onboarding Materials | file[] | No | ❌ No |
-| 2.1 | About You | Your Full Name | text | Yes | ❌ No |
-| 2.2 | About You | Your Role/Title | text | Yes | ❌ No |
-| 2.3 | About You | Company Name | text | Yes | ⚠️ Maybe |
-| 2.4 | About You | Industry | dropdown | Yes | ⚠️ Maybe |
-| 2.5 | About You | Company Size | dropdown | Yes | ❌ No |
-| 2.6 | About You | Business Context | textarea | Yes | ⚠️ Maybe |
-| 2.7 | About You | Timezone | dropdown | Yes | ❌ No |
-| 2.8 | About You | Working Hours | composite | Yes | ⚠️ Maybe |
-| 2.9 | About You | Tools You Use | checkbox-grid | Yes | ✅ Yes |
-| 2.10 | About You | Who Reviews the Work | composite | Yes | ❌ No |
-| 2.11 | About You | Preferred Channel | radio-group | Yes | ❌ No |
-| 3.1 | Bad | Dealbreakers | textarea | Yes | ❌ No |
-| 3.2 | Bad | Tolerable Mistakes | textarea | Yes | ❌ No |
-| 3.3 | Bad | Past Failures | textarea | Recommended | ❌ No |
-| 3.4 | Bad | Confidentiality Rules | textarea | Yes | ❌ No |
-| 4.1 | Skills | Skill Name | text | Yes | ✅ Yes |
-| 4.2 | Skills | When This Skill Is Used | textarea | Yes | ✅ Yes |
-| 4.3 | Skills | Process Steps | ordered-list | Yes | ✅ Partially |
-| 4.4 | Skills | Quality Bar | textarea | Yes | ❌ No |
-| 4.5 | Skills | Failure Modes | textarea | Yes | ❌ No |
-| 4.6 | Skills | Who Uses the Output | text | Yes | ❌ No |
-| 4.7 | Skills | Frequency | dropdown | Yes | ⚠️ Maybe |
-| 4.8 | Skills | Reference Documents | file[] | No | ❌ No |
-| 5.1 | Style | Tone | chips + textarea | Yes | ⚠️ Maybe |
-| 5.2 | Style | Decision Freedom | radio-cards | Yes | ❌ No |
-| 5.3 | Style | Daily Routine | textarea | Yes | ⚠️ Maybe |
-| 5.4 | Style | Escalation Triggers | textarea | Yes | ❌ No |
-| 5.5 | Style | KPIs | textarea | Yes | ⚠️ Maybe |
-| 5.6 | Style | Silence Handling | radio-cards | Yes | ❌ No |
-| 5.7 | Style | Reporting | composite | Yes | ❌ No |
-| 5.8 | Style | Improvement Areas | textarea | No | ❌ No |
+| 2.1 | Employer Profile | Your Full Name | text | Yes | ❌ No |
+| 2.2 | Employer Profile | Your Role/Title | text | Yes | ❌ No |
+| 2.3 | Employer Profile | Company Name | text | Yes | ⚠️ Maybe |
+| 2.4 | Employer Profile | Industry | dropdown | Yes | ⚠️ Maybe |
+| 2.5 | Employer Profile | Company Size | dropdown | Yes | ❌ No |
+| 2.6 | Employer Profile | Business Context | textarea | Yes | ⚠️ Maybe |
+| 2.7 | Employer Profile | Timezone | dropdown | Yes | ❌ No |
+| 2.8 | Employer Profile | Working Hours | composite | Yes | ⚠️ Maybe |
+| 2.9 | Employer Profile | Tools You Use | checkbox-grid | Yes | ✅ Yes |
+| 2.10 | Employer Profile | Who Reviews the Work | composite | Yes | ❌ No |
+| 2.11 | Employer Profile | Preferred Channel | radio-group | Yes | ❌ No |
+| 3.1 | Failures | Dealbreakers | textarea | Yes | ❌ No |
+| 3.2 | Failures | Tolerable Mistakes | textarea | Yes | ❌ No |
+| 3.3 | Failures | Past Failures | textarea | Recommended | ❌ No |
+| 3.4 | Failures | Confidentiality Rules | textarea | Yes | ❌ No |
+| 4.1 | Core Skills | Skill Name | text | Yes | ✅ Yes |
+| 4.2 | Core Skills | When This Skill Is Used | textarea | Yes | ✅ Yes |
+| 4.3 | Core Skills | Process Steps | ordered-list | Yes | ✅ Partially |
+| 4.4 | Core Skills | Quality Bar | textarea | Yes | ❌ No |
+| 4.5 | Core Skills | Failure Modes | textarea | Yes | ❌ No |
+| 4.6 | Core Skills | Who Uses the Output | text | Yes | ❌ No |
+| 4.7 | Core Skills | Frequency | dropdown | Yes | ⚠️ Maybe |
+| 4.8 | Core Skills | Reference Documents | file[] | No | ❌ No |
+| 5.1 | Model | Tone | chips + textarea | Yes | ⚠️ Maybe |
+| 5.2 | Model | Decision Freedom | radio-cards | Yes | ❌ No |
+| 5.3 | Model | Daily Routine | textarea | Yes | ⚠️ Maybe |
+| 5.4 | Model | Escalation Triggers | textarea | Yes | ❌ No |
+| 5.5 | Model | KPIs | textarea | Yes | ⚠️ Maybe |
+| 5.6 | Model | Silence Handling | radio-cards | Yes | ❌ No |
+| 5.7 | Model | Reporting | composite | Yes | ❌ No |
+| 5.8 | Model | Improvement Areas | textarea | No | ❌ No |
 | 6.1 | Domain | Regulations & Compliance | textarea + file[] | No | ⚠️ Maybe |
 | 6.2 | Domain | Frameworks & Methodologies | textarea + file[] | No | ❌ No |
 | 6.3 | Domain | General Reference Materials | textarea + file[] | No | ❌ No |

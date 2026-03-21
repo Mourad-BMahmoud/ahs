@@ -107,11 +107,11 @@ Six sections. Everything an AI agent needs to know to do its job.
 
 | # | Section | What you define |
 |---|---------|----------------|
-| 1 | **The Role** | Job title, mission, responsibilities, hard boundaries |
-| 2 | **About You** | Your name, company, industry, tools, working hours, communication channel |
-| 3 | **What Bad Looks Like** | Dealbreakers, acceptable mistakes, horror stories, confidentiality rules |
-| 4 | **Skills** | 2-6 business processes with steps, triggers, quality bars, and failure modes |
-| 5 | **Working Style** | Tone, autonomy level, daily schedule, escalation triggers, reporting cadence |
+| 1 | **Role Definition** | Job title, mission, responsibilities, hard boundaries |
+| 2 | **Employer Profile** | Your name, company, industry, tools, working hours, communication channel |
+| 3 | **Critical Failures** | Dealbreakers, acceptable mistakes, horror stories, confidentiality rules |
+| 4 | **Core Skills** | 2-6 business processes with steps, triggers, quality bars, and failure modes |
+| 5 | **Operating Model** | Tone, autonomy level, daily schedule, escalation triggers, reporting cadence |
 | 6 | **Domain Knowledge** | Compliance rules, frameworks, reference docs, anything else |
 
 Section 3 is the most important. Specific failures and real horror stories create the strongest guardrails.

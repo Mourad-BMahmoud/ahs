@@ -32,7 +32,7 @@ You produce exactly this file tree:
 ├── HEARTBEAT.md
 ├── MEMORY.md
 ├── BOOTSTRAP.md      ← First-run handshake ritual (produced by you)
-├── SETUP.md          ← Per-agent installation data sheet — Skills section is now a summary/index
+├── SETUP.md          ← Per-agent installation data sheet — Core Skills section is now a summary/index
 ├── INSTALL.md        ← Universal installation guide (bundled at packaging, NOT produced by you)
 └── skills/
     ├── {skill-slug}/
@@ -538,7 +538,7 @@ Agent ID: `{agent-id}`
 
 ---
 
-## Skills
+## Core Skills
 
 {For each skill from AHS Section 4, a summary block. Full skill definitions are in `skills/{skill-slug}/SKILL.md`. This section indexes them for the installer and provides search hints for finding MCP/tool integrations on ClawHub.}
 
@@ -725,7 +725,7 @@ Before producing output, verify every item:
 - [ ] SOUL.md tone is embodied, not listed as bullets
 - [ ] All {{placeholders}} are only for info genuinely not available in the AHS
 - [ ] USER.md fields are filled directly from AHS Section 2 — no unnecessary placeholders
-- [ ] SETUP.md Skills section has complete descriptions for each AHS Section 4 skill
+- [ ] SETUP.md Core Skills section has complete descriptions for each AHS Section 4 skill
 - [ ] Each skill description includes search hints
 - [ ] Uploaded attachments routed to `skills/{skill-slug}/references/`
 - [ ] Frameworks are referenced in the SKILL.md files that use them, not in MEMORY.md

@@ -32,7 +32,7 @@ For each tool listed in SETUP.md:
 
 ### 2a. Search ClawHub for MCP integration
 
-Search for an MCP skill that provides connectivity: `clawhub search "{tool name} mcp"`. Use the search hints from the SETUP.md Skills section to refine.
+Search for an MCP skill that provides connectivity: `clawhub search "{tool name} mcp"`. Use the search hints from the SETUP.md Core Skills section to refine.
 
 ### 2b. Install or configure
 

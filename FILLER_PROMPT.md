@@ -225,7 +225,7 @@ Produce a JSON object with two sections: `prefilled` (the field values you extra
 
 2. **Empty string for fields you can't fill.** Don't write "N/A" or "Not specified" — just `""`. The form UI will show these as empty.
 
-3. **The checklist is for the human.** Write it in plain language. For "needs_human" items, include a brief nudge explaining what's needed — especially for Section 3 (What Bad Looks Like), which is the most important section they need to fill.
+3. **The checklist is for the human.** Write it in plain language. For "needs_human" items, include a brief nudge explaining what's needed — especially for Section 3 (Critical Failures), which is the most important section they need to fill.
 
 4. **Recommended attachments are smart suggestions.** Based on the skills you clustered, suggest specific documents the human should upload. Name the skill each attachment supports. Don't suggest generic things — be specific to this role.
 
