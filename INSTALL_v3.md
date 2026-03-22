@@ -42,7 +42,6 @@ MCP servers connect at the **agent level**, not per-skill. One Zendesk connectio
 
 - **If no ClawHub match:** Guide the human through manual MCP server setup. Check if a community MCP server exists, or configure a direct API connection. Common patterns:
   - MCP server entry in the agent's configuration with command, args, and environment variables
-  - Composio plugin for managed OAuth services
   - Bundled tools (Google Workspace, Slack, Discord)
 
 ### 2c. Get credentials from the human
