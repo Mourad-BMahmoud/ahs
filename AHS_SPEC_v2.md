@@ -140,14 +140,13 @@ Before any fields, the form opens with this context block. **This is static — 
 ### 1.5 Onboarding Materials
 | Property | Value |
 |----------|-------|
-| **Type** | File upload (multiple files, drag-and-drop zone) |
+| **Type** | Textarea (multi-line) |
 | **Required** | No |
-| **Accepted formats** | PDF, DOCX, TXT, MD, XLSX, CSV, PNG, JPG |
-| **Max files** | 10 |
-| **Max size per file** | 25MB |
-| **Helper text** | Upload anything you'd give a new hire on their first day — employee handbook, standard operating procedures, process guides, org charts, style guides, brand guidelines. These files will be placed in the employee's reference library. |
+| **Validation** | Min 30 characters if filled |
+| **Helper text** | Describe anything you'd tell a new hire on their first day — company culture, unwritten rules, important context that doesn't fit elsewhere. If you have documents (handbooks, SOPs, brand guides), attach them to the relevant skill in Section 4. |
+| **Placeholder** | `We're informal internally but very polished externally. Everyone uses first names. The CEO reads every client-facing email so quality matters. New hires shadow the support team for a week before going solo — your employee should assume a similar ramp-up period.` |
 
-**Dev note:** Show a drag-and-drop zone with file list below. Show filename, size, and a remove button per file. Show format restrictions and size limit near the drop zone.
+**Dev note:** Textarea ~5 lines tall. Show character count.
 
 ---
 
@@ -956,59 +955,33 @@ End of day (4:30pm):
 ### 6.1 Regulations & Compliance
 | Property | Value |
 |----------|-------|
-| **Type** | Composite: textarea + file upload (multiple) |
+| **Type** | Textarea |
 | **Required** | No |
-| **Helper text** | Are there any laws, regulations, industry standards, or internal compliance policies your employee must follow? Think about data privacy (GDPR, HIPAA), industry regulations, advertising standards, financial rules, or internal policies. |
-
-**Textarea:**
-| Property | Value |
-|----------|-------|
+| **Helper text** | Are there any laws, regulations, industry standards, or internal compliance policies your employee must follow? Think about data privacy (GDPR, HIPAA), industry regulations, advertising standards, financial rules, or internal policies. If you have compliance documents, attach them to the relevant skill in Section 4. |
 | **Placeholder** | `We handle EU customer data, so GDPR applies to everything. Never store personal data outside our approved systems. All marketing emails must include unsubscribe links (CAN-SPAM). Our industry (construction SaaS) has no specific regulations, but we follow SOC 2 practices internally.` |
 | **Validation** | None (optional) |
-
-**File upload:**
-| Property | Value |
-|----------|-------|
-| **Label** | Upload compliance documents, policy handbooks, or regulatory summaries |
-| **Accepted formats** | PDF, DOCX, TXT, MD, XLSX, CSV, PNG, JPG |
-| **Max files** | 10 |
-| **Max size per file** | 25MB |
-
-**Dev note:** Show the textarea first, then the file upload zone below it, labeled separately.
 
 ---
 
 ### 6.2 Frameworks & Methodologies
 | Property | Value |
 |----------|-------|
-| **Type** | Composite: textarea + file upload (multiple) |
+| **Type** | Textarea |
 | **Required** | No |
-| **Helper text** | Does your employee need to follow specific frameworks, methodologies, scoring rubrics, or decision-making models? Upload the documents and briefly describe how they're used. |
-
-**Textarea:**
-| Property | Value |
-|----------|-------|
-| **Placeholder** | `We use the BANT framework for lead qualification (Budget, Authority, Need, Timeline). The scoring rubric is in the uploaded doc. We also follow the "Reply Within 3" methodology for customer support — see attached.` |
+| **Helper text** | Does your employee need to follow specific frameworks, methodologies, scoring rubrics, or decision-making models? Describe them here. If you have framework documents, attach them to the skill that uses them in Section 4. |
+| **Placeholder** | `We use the BANT framework for lead qualification (Budget, Authority, Need, Timeline). We also follow the "Reply Within 3" methodology for customer support — first response within 3 hours, resolution within 3 business days.` |
 | **Validation** | None (optional) |
-
-**File upload:** Same specs as 6.1.
 
 ---
 
 ### 6.3 General Reference Materials
 | Property | Value |
 |----------|-------|
-| **Type** | Composite: textarea + file upload (multiple) |
+| **Type** | Textarea |
 | **Required** | No |
-| **Helper text** | Anything else your employee should have access to as reference — product documentation, competitor analysis, market research, customer personas, brand guidelines, past examples of good work, or anything that helps them understand your business better. |
-
-**Textarea:**
-| Property | Value |
-|----------|-------|
-| **Placeholder** | `Uploading our product one-pager, competitor comparison sheet, and ideal customer persona doc. The employee should reference these when qualifying leads and drafting outreach.` |
+| **Helper text** | Anything else your employee should know as background — product details, competitor landscape, customer personas, brand voice, market context. If you have reference documents, attach them to the relevant skill in Section 4. |
+| **Placeholder** | `Our main competitors are Acme and Zenith — we win on service quality, they win on price. Our ideal customer is a mid-size B2B company doing $5-50M revenue. Our product one-pager and customer persona docs are attached to the lead qualification skill.` |
 | **Validation** | None (optional) |
-
-**File upload:** Same specs as 6.1.
 
 ---
 
@@ -1061,7 +1034,7 @@ For use by the Filler prompt and Converter prompt. **This table is the contract 
 | 1.2 | Role | Mission Statement | textarea | Yes | ✅ Yes |
 | 1.3 | Role | Key Responsibilities | textarea | Yes | ✅ Yes |
 | 1.4 | Role | Boundaries | textarea | Yes | ✅ Partially |
-| 1.5 | Role | Onboarding Materials | file[] | No | ❌ No |
+| 1.5 | Role | Onboarding Materials | textarea | No | ❌ No |
 | 2.1 | Employer Profile | Your Full Name | text | Yes | ❌ No |
 | 2.2 | Employer Profile | Your Role/Title | text | Yes | ❌ No |
 | 2.3 | Employer Profile | Company Name | text | Yes | ⚠️ Maybe |
@@ -1093,9 +1066,9 @@ For use by the Filler prompt and Converter prompt. **This table is the contract 
 | 5.6 | Model | Silence Handling | radio-cards | Yes | ❌ No |
 | 5.7 | Model | Reporting | composite | Yes | ❌ No |
 | 5.8 | Model | Improvement Areas | textarea | No | ❌ No |
-| 6.1 | Domain | Regulations & Compliance | textarea + file[] | No | ⚠️ Maybe |
-| 6.2 | Domain | Frameworks & Methodologies | textarea + file[] | No | ❌ No |
-| 6.3 | Domain | General Reference Materials | textarea + file[] | No | ❌ No |
+| 6.1 | Domain | Regulations & Compliance | textarea | No | ⚠️ Maybe |
+| 6.2 | Domain | Frameworks & Methodologies | textarea | No | ❌ No |
+| 6.3 | Domain | General Reference Materials | textarea | No | ❌ No |
 | 6.4 | Domain | Anything Else | textarea | No | ❌ No |
 
 ---
@@ -1110,7 +1083,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 1.2 Mission | SOUL.md | Core identity, mission section |
 | 1.3 Responsibilities | SOUL.md + AGENTS.md | Scope definition |
 | 1.4 Boundaries | SOUL.md (anti-patterns) | Hard limits |
-| 1.5 Onboarding Docs | skills/*/references/ | Routed to most relevant skill |
+| 1.5 Onboarding Materials | SOUL.md + AGENTS.md | Cultural context, onboarding notes |
 | 2.1–2.2 Name, Role | USER.md | Direct fields |
 | 2.3–2.6 Company info | USER.md | Direct fields |
 | 2.7 Timezone | USER.md + SETUP.md | Scheduling |
@@ -1140,8 +1113,8 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 5.8 Improvement Areas | SOUL.md | Growth direction |
 | 6.1 Regulations | MEMORY.md (compliance seed) + SOUL.md | Compliance context |
 | 6.2 Frameworks | skills/*/SKILL.md (inside the skill that uses them) | Methodology |
-| 6.3 Reference Materials | skills/*/references/ (routed to relevant skill) | Reference library |
-| 6.4 Anything Else | SOUL.md or AGENTS.md (judgment call) | Catch-all |
+| 6.3 Reference Materials | MEMORY.md | Domain knowledge seed |
+| 6.4 Anything Else | Most relevant workspace file | Operational context |
 
 ---
 
@@ -1218,29 +1191,12 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
       "content": "End-of-day summary: what was done..."
     },
     "5.8": "Over time, should get better at...",
-    "6.1": {
-      "text": "We handle EU customer data, so GDPR applies...",
-      "files": []
-    },
-    "6.2": {
-      "text": "",
-      "files": []
-    },
-    "6.3": {
-      "text": "Uploading our product one-pager...",
-      "files": []
-    },
+    "6.1": "We handle EU customer data, so GDPR applies...",
+    "6.2": "",
+    "6.3": "Our main competitors are Acme and Zenith...",
     "6.4": ""
   },
   "files": [
-    {
-      "field_id": "1.5",
-      "skill_index": null,
-      "filename": "employee-handbook.pdf",
-      "size_bytes": 2456789,
-      "mime_type": "application/pdf",
-      "storage_key": "uploads/abc123/employee-handbook.pdf"
-    },
     {
       "field_id": "4.8",
       "skill_index": 0,
@@ -1262,5 +1218,5 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 - `fields.2.8` is an object with `start` (24h format), `end` (24h format), and `days` (array of day names).
 - `fields.2.9` is an object with `checked` (array of tool names) and `other` (free-text string or null).
 - `fields.2.10` is an object with `name` (text) and `review_style` (dropdown value).
-- File uploads are in a separate `files` array. Each entry references a `field_id` and optionally a `skill_index` (0-based, for per-skill field 4.8). The `storage_key` is the backend storage path — the frontend uploads files to storage and includes the key in the payload.
-- Section 6 fields (6.1–6.3) that have both text and files use an object: `{ "text": "...", "files": [] }`. The actual file data is in the top-level `files` array, referenced by `field_id`. Field 6.4 is a plain string.
+- File uploads are in a separate `files` array. Only field 4.8 (per-skill reference documents) supports file uploads. Each entry references a `field_id` and a `skill_index` (0-based). The `storage_key` is the backend storage path — the frontend uploads files to storage and includes the key in the payload.
+- Section 6 fields (6.1–6.4) are plain strings (text only, no file uploads).

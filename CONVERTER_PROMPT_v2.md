@@ -55,9 +55,9 @@ You do NOT produce INSTALL.md. That's a universal file maintained separately and
 
 2. **No CLI commands in SETUP.md.** The installing OpenClaw knows its own CLI. SETUP.md provides DATA (tool list, schedule, timezone), not instructions.
 
-3. **Attachments go to `skills/{skill-slug}/references/` as actual files.** Never summarize, extract, or paraphrase attachment contents. Route them to the most relevant skill's references/ directory. Include the original filename.
+3. **Attachments go to `skills/{skill-slug}/references/` as actual files.** Only AHS 4.8 (per-skill reference documents) produces file attachments. Each file goes directly into the skill it was attached to. Never summarize, extract, or paraphrase attachment contents. Include the original filename.
 
-4. **Frameworks go inside the SKILL.md files that use them.** If a framework (BANT, MEDDIC, RICE, etc.) is described in AHS 4.3 process steps or uploaded in AHS 4.8/6.2, reference it in that skill's SKILL.md and place the uploaded file in `skills/{skill-slug}/references/` — not in MEMORY.md.
+4. **Frameworks go inside the SKILL.md files that use them.** If a framework (BANT, MEDDIC, RICE, etc.) is described in AHS 4.3 process steps or AHS 6.2, embed it in that skill's SKILL.md. If a framework doc was uploaded via AHS 4.8, it lives in that skill's `references/` — reference it from the SKILL.md.
 
 5. **MEMORY.md ships empty or with a minimal compliance seed.** The agent builds memory through work over time. Never pre-fill with business knowledge.
 
@@ -513,10 +513,9 @@ See `references/{filename}` for the complete {Framework Name}. {1-2 sentences on
 
 **Routing logic for attachments:**
 
-1. **AHS 4.8 (skill-specific docs):** Go directly into that skill's `skills/{skill-slug}/references/` directory.
-2. **AHS 1.5 (onboarding docs):** Route to the skill whose process steps most closely relate to the document's content. If a doc applies to multiple skills, put it in the skill where it's most critical.
-3. **AHS 6.2 (frameworks):** Route to the skill that uses the framework. If a framework applies to multiple skills, put it in the primary skill and reference it from others.
-4. **AHS 6.3 (general reference):** Route to the most relevant skill. If truly general (brand guidelines, company overview), put it in the skill that produces the most external-facing output.
+Only AHS 4.8 produces file attachments. Each file is attached to a specific skill by the user — no routing decisions needed.
+
+1. **AHS 4.8 (per-skill docs):** Go directly into that skill's `skills/{skill-slug}/references/` directory. One skill, one destination.
 
 **Rules:**
 - Files are placed as-is. Never modify, summarize, or extract from uploaded files.
@@ -725,13 +724,9 @@ After this conversation, delete this file. You won't need it again.
 
 | AHS Field | Attachment Type | Destination |
 |-----------|----------------|-------------|
-| 1.5 | Onboarding docs | → `skills/{most-relevant-skill-slug}/references/` |
 | 4.8 | Per-skill docs | → `skills/{this-skill-slug}/references/` |
-| 6.1 | Compliance docs | → `skills/{most-affected-skill-slug}/references/` |
-| 6.2 | Framework docs | → `skills/{skill-that-uses-framework-slug}/references/` |
-| 6.3 | General reference | → `skills/{most-relevant-skill-slug}/references/` |
 
-Never summarize. Never extract. Place as actual files with original filenames.
+Only AHS 4.8 produces file attachments. All other AHS fields are text-only — the converter embeds their content into the appropriate workspace files. Never summarize or extract from uploaded files. Place as actual files with original filenames.
 
 ---
 
@@ -751,7 +746,7 @@ Before producing output, verify every item:
 - [ ] USER.md fields are filled directly from AHS Section 2 — no unnecessary placeholders
 - [ ] SETUP.md Core Skills section has complete descriptions for each AHS Section 4 skill
 - [ ] Each skill description includes search hints
-- [ ] Uploaded attachments routed to `skills/{skill-slug}/references/`
+- [ ] AHS 4.8 attachments placed in `skills/{skill-slug}/references/` (only upload point)
 - [ ] Frameworks are referenced in the SKILL.md files that use them, not in MEMORY.md
 - [ ] No reference to AHS, form, or building process in any output file
 - [ ] SETUP.md lives INSIDE the workspace folder (alongside SOUL.md, AGENTS.md, etc.)
