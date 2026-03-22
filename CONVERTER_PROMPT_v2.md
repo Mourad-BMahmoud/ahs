@@ -373,26 +373,50 @@ When you receive a heartbeat poll, read HEARTBEAT.md and follow it. If nothing n
 
 ### HEARTBEAT.md
 
-**Purpose:** Periodic task checklist for heartbeat runs. The agent reads this every heartbeat cycle (typically every 30 minutes during active hours).
+**Purpose:** Periodic trigger system. The agent reads this every heartbeat cycle (typically every 30 minutes during active hours). Each item names a condition, a threshold, and an action — the heartbeat decides what to DO, not what to think about.
 
-**Source fields:** AHS 5.5 (KPIs), 5.3 (Daily Routine — only the "check" items)
+**Source fields:** AHS 5.5 (KPIs) AND 5.3 (Daily Routine — time-triggered checks)
+
+**Token budget:** Max 800 characters total. Use shorthand: `condition? → action`. No prose, no paragraphs.
 
 **Format:**
 ```markdown
-# Heartbeat Checklist
+# Heartbeat
 
-{3-5 items maximum. Each item is a quick check, not a full task. Derived from KPIs that can be checked periodically.}
+- {condition from KPI}? → run {skill-name}
+- {items} aging past {X hours} without response? → prioritize now
+- {items} stuck {Y+ hours}? → escalate to {{user_first_name}} with status
+- Pending follow-ups due within 1h? → send updates via {skill-name}
+- {Time-window check from daily routine, e.g., "End-of-day and no summary sent?"}? → trigger {skill-name}
+```
 
-- {Check item 1 — e.g., "Any new inbound leads waiting in the pipeline? If yes, begin qualification."}
-- {Check item 2 — e.g., "Any support tickets open > 4 hours? Flag to {{user_first_name}}."}
-- {Check item 3 — e.g., "Any client messages waiting for a response?"}
+**Good example** (derived from a sales role with KPIs + daily routine):
+```markdown
+# Heartbeat
+
+- New inbound leads in pipeline? → run /qualify-lead
+- Any lead aging past 2h without first response? → prioritize now
+- Any deal stuck 48h+ at same stage? → escalate to Casey with status
+- Proposals pending client reply > 24h? → send follow-up via /outreach
+- After 17:00 and no daily summary sent? → run /daily-report
+- Weekly pipeline review due today? → prep dashboard via /analytics
+```
+
+**Bad example** (vague questions with no action mapping — DO NOT produce this):
+```markdown
+- Any new tickets waiting?
+- How are things going with clients?
+- Anything urgent?
 ```
 
 **Rules:**
-- Maximum 5 items. This burns tokens every heartbeat cycle.
-- Each item must be a QUICK CHECK, not a lengthy process. The check determines if work needs to happen; the skill does the actual work.
-- Derive from KPIs that are time-sensitive and checkable.
-- If nothing from the KPIs translates to periodic checks, use 2-3 generic items: check for messages, check for upcoming deadlines, check for stale tasks.
+- Maximum 6 items. This burns tokens every heartbeat cycle — stay under 800 chars.
+- Every item MUST map to a skill (e.g., `→ run /skill-name`) or an escalation (e.g., `→ escalate to {{user_first_name}}`). Never a vague "handle it".
+- Include at least one SLA-based check (aging threshold derived from KPIs).
+- Include at least one time-triggered check (derived from daily routine windows in AHS 5.3).
+- Each item is a QUICK CHECK, not a full task. The check determines if work needs to happen; the skill does the actual work.
+- Derive conditions from KPIs (AHS 5.5) that are time-sensitive AND from daily routine (AHS 5.3) time windows.
+- If nothing from the KPIs translates to periodic checks, use 3-4 generic items with concrete actions: check messages → run /inbox, check deadlines → run /tasks, check stale items → escalate.
 
 ---
 
