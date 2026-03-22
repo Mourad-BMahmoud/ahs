@@ -1079,7 +1079,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 
 | AHS Field | → Workspace File | Purpose |
 |-----------|-----------------|---------|
-| 1.1 Job Title | IDENTITY.md | Agent name basis |
+| 1.1 Job Title | IDENTITY.md | Agent name, emoji, avatar |
 | 1.2 Mission | SOUL.md | Core identity, mission section |
 | 1.3 Responsibilities | SOUL.md + AGENTS.md | Scope definition |
 | 1.4 Boundaries | SOUL.md (anti-patterns) | Hard limits |
@@ -1103,7 +1103,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 4.6 Output Audience | skills/{name}/SKILL.md (body) | Context for quality |
 | 4.7 Frequency | skills/{name}/SKILL.md (frontmatter) + SETUP.md | Scheduling |
 | 4.8 Skill Docs | skills/{name}/references/ | Actual files placed as-is |
-| 5.1 Tone | SOUL.md (writing style — embodied, not listed) | Voice & personality |
+| 5.1 Tone | SOUL.md (writing style — embodied, not listed) + IDENTITY.md (Vibe) | Voice & personality |
 | 5.2 Decision Freedom | AGENTS.md + SOUL.md | Autonomy level |
 | 5.3 Daily Routine | SETUP.md (schedule data) | Schedule |
 | 5.4 Escalation Triggers | AGENTS.md + SOUL.md (anti-patterns) | Escalation rules |
