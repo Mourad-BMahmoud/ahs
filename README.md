@@ -35,11 +35,12 @@ Set up your LLM provider:
 cp .env.example .env
 ```
 
-Edit `.env` with your API key:
+This creates your local config file from the template. Open `.env` and add your API key:
 
 ```
 AHS_PROVIDER=anthropic       # or: openai, openrouter
 AHS_API_KEY=sk-...           # your API key
+AHS_MODEL=                   # leave blank for default, or set any model ID
 ```
 
 Then run:
@@ -48,7 +49,7 @@ Then run:
 node bin/ahs.js form
 ```
 
-Opens the web form at `localhost:3456`. Fill it out, upload reference docs, export your agent.
+Opens the web form at `localhost:3000`. Fill it out, upload reference docs, export your agent.
 
 ---
 
@@ -124,9 +125,11 @@ Works with any of these. Set `AHS_PROVIDER` in your `.env`:
 
 | Provider | Default model | Notes |
 |----------|--------------|-------|
-| `anthropic` | claude-sonnet-4-20250514 | Best results |
+| `anthropic` | claude-sonnet-4-6-20250320 | Recommended |
 | `openai` | gpt-4o | Solid alternative |
-| `openrouter` | anthropic/claude-sonnet-4 | Use any model via OpenRouter |
+| `openrouter` | anthropic/claude-sonnet-4-6 | Use any model via OpenRouter |
+
+Override any default with `AHS_MODEL` in your `.env`.
 
 ---
 

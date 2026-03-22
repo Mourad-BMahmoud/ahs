@@ -2,9 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 
 const DEFAULTS = {
-  anthropic: "claude-sonnet-4-20250514",
+  anthropic: "claude-sonnet-4-6-20250320",
   openai: "gpt-4o",
-  openrouter: "anthropic/claude-sonnet-4",
+  openrouter: "anthropic/claude-sonnet-4-6",
 };
 
 /**

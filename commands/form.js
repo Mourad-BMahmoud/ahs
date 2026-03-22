@@ -33,7 +33,7 @@ function readBody(req, limit) {
 
 export function runForm(opts) {
   const cwd = process.cwd();
-  const port = parseInt(opts.port) || 3456;
+  const port = parseInt(opts.port) || 3000;
   const uiDir = resolve(join(import.meta.dirname, "..", "ui"));
   const ahsPath = join(cwd, "ahs.json");
 

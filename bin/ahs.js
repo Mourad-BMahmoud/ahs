@@ -52,7 +52,7 @@ program
 program
   .command("form")
   .description("Open the AHS web form in your browser")
-  .option("--port <number>", "Port to serve on", "3456")
+  .option("--port <number>", "Port to serve on", "3000")
   .action(async (opts) => {
     const { runForm } = await import("../commands/form.js");
     runForm(opts);
