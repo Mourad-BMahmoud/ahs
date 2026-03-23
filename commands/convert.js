@@ -37,9 +37,9 @@ export async function runConvert(ahsJsonPath, opts) {
     .replace(/^-|-$/g, "");
 
   // Load converter prompt
-  const converterPath = join(import.meta.dirname, "..", "CONVERTER_PROMPT_v2.md");
+  const converterPath = join(import.meta.dirname, "..", "CONVERTER_PROMPT.md");
   if (!existsSync(converterPath)) {
-    console.error("CONVERTER_PROMPT_v2.md not found alongside the CLI.");
+    console.error("CONVERTER_PROMPT.md not found alongside the CLI.");
     process.exit(1);
   }
   const systemPrompt = readFileSync(converterPath, "utf-8");
@@ -98,8 +98,8 @@ export async function runConvert(ahsJsonPath, opts) {
   mkdirSync(outputDir, { recursive: true });
   const written = writeWorkspace(outputDir, parsedFiles);
 
-  // Copy INSTALL_v3.md as INSTALL.md
-  const installSrc = join(import.meta.dirname, "..", "INSTALL_v3.md");
+  // Bundle INSTALL.md into workspace
+  const installSrc = join(import.meta.dirname, "..", "INSTALL.md");
   if (existsSync(installSrc)) {
     copyFileSync(installSrc, join(outputDir, "INSTALL.md"));
     written.push("INSTALL.md");

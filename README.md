@@ -150,10 +150,10 @@ Override any default with `AHS_MODEL` in your `.env`.
 ├── extract.js                # PDF, DOCX, TXT text extraction
 ├── parser.js                 # Extracts workspace files from LLM response
 ├── template.js               # Blank AHS JSON structure
-├── AHS_SPEC_v2.md            # Full field specification (reference)
-├── CONVERTER_PROMPT_v2.md    # System prompt: AHS -> workspace
+├── AHS_SPEC.md               # Full field specification (reference)
+├── CONVERTER_PROMPT.md       # System prompt: AHS -> workspace
 ├── FILLER_PROMPT.md          # System prompt: posting -> AHS
-└── INSTALL_v3.md             # Install guide (ships with workspace)
+└── INSTALL.md                # Install guide (ships with workspace)
 ```
 
 ---
@@ -167,7 +167,7 @@ Override any default with `AHS_MODEL` in your `.env`.
 
 ## Contributing
 
-AHS is an open standard. The spec (`AHS_SPEC_v2.md`), the prompts, and the CLI are all MIT-licensed. If you build a better form, a different runtime adapter, or a converter for a different agent platform -- that's the point.
+AHS is an open standard. The spec (`AHS_SPEC.md`), the prompts, and the CLI are all MIT-licensed. If you build a better form, a different runtime adapter, or a converter for a different agent platform -- that's the point.
 
 ---
 
