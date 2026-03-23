@@ -27,13 +27,13 @@ The ONE exception: **Skill clustering** (field 4.1). You group the posting's lis
 | 2.3 Company Name | ⚠️ Only if the posting names the company |
 | 2.4 Industry | ⚠️ Only if the posting explicitly states the industry |
 | 2.6 Business Context | ⚠️ Only if the posting has an "About Us" or company description section. Use their words. |
-| 2.8 Working Hours | ⚠️ Only if the posting mentions specific hours or shift |
-| 2.9 Tools You Use | ✅ Check every tool mentioned anywhere in the posting. Only check tools explicitly named. |
+| 2.8 Working Hours | ⚠️ Only if the posting mentions specific hours or shift. Format: `{"start": "09:00", "end": "18:00", "days": ["Monday", ...]}` |
+| 2.9 Tools You Use | ✅ Check every tool mentioned anywhere in the posting. Only check tools explicitly named. Format: `{"checked": [...], "other": null}` |
 | 4.1 Skill Name | ✅ Cluster responsibilities into 2–6 named skills (your judgment — see Skill Clustering below) |
 | 4.2 When This Skill Is Used | ✅ Derive trigger from the clustered duties — when would these tasks happen? |
 | 4.3 Process Steps | ⚠️ Fill steps from the posting's task descriptions within each cluster. Keep the posting's language. If the posting only gives high-level bullets without process detail, fill what's there — the human will add detail. |
 | 4.7 Frequency | ⚠️ Only if the posting mentions "daily," "weekly," or similar frequency words for that skill's duties |
-| 5.1 Tone | ⚠️ Only if the posting describes culture, communication style, or personality traits ("fast-paced," "detail-oriented," "client-facing") — map to the closest tone chips |
+| 5.1 Tone | ⚠️ Only if the posting describes culture, communication style, or personality traits ("fast-paced," "detail-oriented," "client-facing") — map to the closest tone chips. Format: `{"chips": [...], "free_text": null}` |
 | 5.3 Daily Routine | ⚠️ Only if the posting describes a work schedule or daily structure |
 | 5.5 KPIs | ⚠️ Only if the posting lists specific metrics, targets, or success criteria |
 | 6.1 Regulations | ⚠️ Only if the posting mentions compliance, regulations, certifications, or legal requirements |
@@ -44,7 +44,6 @@ These fields require the human's own input. Never fill them, even partially:
 
 | Field | Why |
 |-------|-----|
-| 1.5 Onboarding Materials | Human uploads their own docs |
 | 2.1 Your Full Name | Human's personal info |
 | 2.2 Your Role/Title | Human's personal info |
 | 2.5 Company Size | Human knows their own company |
@@ -64,8 +63,8 @@ These fields require the human's own input. Never fill them, even partially:
 | 5.6 Silence Handling | Human decides idle behavior |
 | 5.7 Reporting | Human decides what reports they want |
 | 5.8 Improvement Areas | Human defines growth direction |
-| 6.2 Frameworks | Human uploads their own frameworks |
-| 6.3 General Reference | Human uploads their own materials |
+| 6.2 Frameworks | Human describes their own frameworks |
+| 6.3 General Reference | Human describes their own domain knowledge |
 | 6.4 Anything Else | Human's catch-all |
 
 ## SKILL CLUSTERING
@@ -124,7 +123,10 @@ Produce a JSON object with two sections: `prefilled` (the field values you extra
     "2.4": "SaaS",
     "2.6": "Acme Corp is a B2B SaaS company providing customer communication tools to mid-market companies.",
     "2.8": "",
-    "2.9": ["Zendesk", "Slack", "Google Sheets"],
+    "2.9": {
+      "checked": ["Zendesk", "Slack", "Google Sheets"],
+      "other": null
+    },
     "4": [
       {
         "4.1": "Support Ticket Triage & Response",
@@ -161,7 +163,10 @@ Produce a JSON object with two sections: `prefilled` (the field values you extra
         "search_hints": ["google sheets api connector", "reporting dashboard mcp", "zendesk analytics api integration"]
       }
     ],
-    "5.1": ["Professional", "Empathetic"],
+    "5.1": {
+      "chips": ["Professional", "Empathetic"],
+      "free_text": null
+    },
     "5.3": "",
     "5.5": "",
     "6.1": ""
@@ -181,7 +186,6 @@ Produce a JSON object with two sections: `prefilled` (the field values you extra
     ],
     "needs_human": [
       "1.4 Boundaries — posting doesn't list restrictions. What should this employee NEVER do?",
-      "1.5 Onboarding Materials — upload any docs you'd give a new hire",
       "2.1 Your Full Name",
       "2.2 Your Role/Title",
       "2.5 Company Size",
@@ -205,8 +209,8 @@ Produce a JSON object with two sections: `prefilled` (the field values you extra
       "5.7 Reporting — what regular updates do you want?",
       "5.8 Improvement Areas — what should the employee get better at over time?",
       "6.1 Regulations — no compliance requirements mentioned in posting",
-      "6.2 Frameworks — upload any scoring rubrics, methodologies, or decision models",
-      "6.3 General Reference Materials — upload product docs, competitor sheets, personas",
+      "6.2 Frameworks — describe any scoring rubrics, methodologies, or decision models",
+      "6.3 General Reference Materials — describe product details, competitor landscape, customer personas",
       "6.4 Anything Else"
     ],
     "recommended_attachments": [

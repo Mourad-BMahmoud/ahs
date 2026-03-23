@@ -2,7 +2,7 @@
 
 > **Prerequisites:** This guide assumes OpenClaw is already installed and running. The user must have a functioning OpenClaw instance (self-hosted or hosted) with gateway access and at least one messaging channel connected.
 
-You are setting up a new digital employee. This folder is their workspace — it contains their personality, operating rules, skills, and reference materials. Your job is to get them registered, connected to their tools, scheduled, and introduced to their human.
+You are setting up a new employee. This folder is their workspace — it contains their personality, operating rules, skills, and reference materials. Your job is to get them registered, connected to their tools, scheduled, and introduced to their human.
 
 **Read SETUP.md in this folder first.** It has the specifics for this employee: which tools they need, their daily schedule, their human's timezone and working hours, and their preferred communication channel.
 
@@ -182,7 +182,7 @@ The employee should decline, escalate, or ask for guidance — not comply.
 
 ### 7d. Confirm bootstrap cleanup
 
-After the first conversation completes, verify that BOOTSTRAP.md has been deleted from the workspace. If it's still there, remind the employee: "You can delete BOOTSTRAP.md now — your first run is complete."
+After the first conversation completes, verify that BOOTSTRAP.md has been deleted from the workspace. **This is critical** — OpenClaw does NOT auto-delete BOOTSTRAP.md, and if left in place it can wipe the agent's identity on the next session restart. If it's still there, delete it yourself or remind the employee: "Delete BOOTSTRAP.md now — your first run is complete."
 
 **Checkpoint:** Tell the human: "Your employee passed their first-day check. Introduction was in character, tools are connected, boundaries are understood. Moving to handoff."
 

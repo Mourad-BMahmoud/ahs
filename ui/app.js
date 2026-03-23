@@ -433,7 +433,7 @@ function collectFormData() {
   const checkedTools = [];
   document.querySelectorAll(".tool-cb:checked").forEach(cb => checkedTools.push(cb.value));
   const otherTools = v("f-2.9-other");
-  const tools = otherTools ? [...checkedTools, ...otherTools.split(",").map(t => t.trim()).filter(Boolean)] : checkedTools;
+  const tools = { checked: checkedTools, other: otherTools || null };
 
   // Working hours
   const days = [];
@@ -463,7 +463,7 @@ function collectFormData() {
       "4.6": block.querySelector(".skill-audience")?.value || "",
       "4.7": block.querySelector(".skill-freq")?.value || "",
       "4.8": [],
-      "search_hints": []
+      "search_hints": JSON.parse(block.dataset.searchHints || "[]")
     });
   });
 
@@ -473,7 +473,6 @@ function collectFormData() {
       "1.2": v("f-1.2"),
       "1.3": v("f-1.3"),
       "1.4": v("f-1.4"),
-      "1.5": [],
       "2.1": v("f-2.1"),
       "2.2": v("f-2.2"),
       "2.3": v("f-2.3"),
@@ -549,17 +548,24 @@ function loadFormData(data) {
     }
   }
 
-  // Tools
-  if (Array.isArray(p["2.9"])) {
-    const known = new Set();
-    document.querySelectorAll(".tool-cb").forEach(cb => known.add(cb.value));
-    const other = [];
-    for (const t of p["2.9"]) {
+  // Tools — accept both {checked, other} and plain array
+  if (p["2.9"]) {
+    let checkedArr, otherStr;
+    if (Array.isArray(p["2.9"])) {
+      checkedArr = p["2.9"];
+      otherStr = null;
+    } else {
+      checkedArr = p["2.9"].checked || [];
+      otherStr = p["2.9"].other || null;
+    }
+    const unknownTools = [];
+    for (const t of checkedArr) {
       const cb = document.querySelector(`.tool-cb[value="${CSS.escape(t)}"]`);
       if (cb) cb.checked = true;
-      else other.push(t);
+      else unknownTools.push(t);
     }
-    if (other.length) document.getElementById("f-2.9-other").value = other.join(", ");
+    const allOther = [...unknownTools, ...(otherStr ? otherStr.split(",").map(s => s.trim()).filter(Boolean) : [])];
+    if (allOther.length) document.getElementById("f-2.9-other").value = allOther.join(", ");
   }
 
   // Review
@@ -619,6 +625,9 @@ function loadFormData(data) {
           list.appendChild(row);
         });
       }
+
+      // Store search_hints as hidden data on the block
+      if (skill.search_hints) block.dataset.searchHints = JSON.stringify(skill.search_hints);
 
       updateSkillTitle(idx);
     }

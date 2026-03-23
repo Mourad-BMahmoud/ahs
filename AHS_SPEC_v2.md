@@ -11,7 +11,7 @@
 > - Choices where possible (dropdowns, chips, checkboxes). Free text where nuance is needed.
 > - Rich helper text on every field — explain WHY we're asking, not just WHAT.
 > - Placeholders that model good answers, not just label the field.
-> - Attachments accepted at multiple points — onboarding docs, per-skill reference docs, framework docs, general reference.
+> - File uploads in one place: per-skill reference documents (field 4.8). Everything else is text.
 > - No technical fields anywhere (no connection methods, auth types, env vars, API configs).
 > - All sections can be saved independently (save-per-section, not a single giant form submit).
 > - Progress indicator visible at all times showing section completion status.
@@ -23,7 +23,7 @@
 > - SOUL.md: ≤ 2,000 words (~8,000 chars)
 > - AGENTS.md: ≤ 1,200 words (~5,000 chars)
 > - Each SKILL.md: ≤ 1,500 words (~6,000 chars)
-> - HEARTBEAT.md: ≤ 200 words
+> - HEARTBEAT.md: 3–6 items, ≤ 800 chars
 > - USER.md, IDENTITY.md, TOOLS.md, MEMORY.md: ≤ 500 words each
 > - SETUP.md: No limit (read by installing agent, not injected into bootstrap)
 > - Total bootstrap injection: aim for ≤ 100,000 chars to leave headroom
@@ -34,7 +34,7 @@
 
 Before any fields, the form opens with this context block. **This is static — not editable. Display it as a banner or introductory card.**
 
-> **You're hiring a digital employee.**
+> **You're hiring an AI agent.**
 >
 > This form captures everything your new employee needs to know to do their job well. Think of it exactly like onboarding a new hire: who they are, what they do, what your business looks like, what "good work" means, and what mistakes to avoid.
 >
@@ -134,19 +134,6 @@ Before any fields, the form opens with this context block. **This is static — 
 - Don't make changes to the billing system — only read access
 - Never share internal pricing or discount structures externally
 ```
-
----
-
-### 1.5 Onboarding Materials
-| Property | Value |
-|----------|-------|
-| **Type** | Textarea (multi-line) |
-| **Required** | No |
-| **Validation** | Min 30 characters if filled |
-| **Helper text** | Describe anything you'd tell a new hire on their first day — company culture, unwritten rules, important context that doesn't fit elsewhere. If you have documents (handbooks, SOPs, brand guides), attach them to the relevant skill in Section 4. |
-| **Placeholder** | `We're informal internally but very polished externally. Everyone uses first names. The CEO reads every client-facing email so quality matters. New hires shadow the support team for a week before going solo — your employee should assume a similar ramp-up period.` |
-
-**Dev note:** Textarea ~5 lines tall. Show character count.
 
 ---
 
@@ -1009,7 +996,7 @@ After completing all sections, the user sees a summary view. **Build this as a d
 > Section 5 — Operating Model: ✅ Complete
 > Section 6 — Domain Knowledge: ⚠️ Optional fields empty
 >
-> **Attachments:** 6 files uploaded (3 onboarding docs, 2 per-skill references, 1 framework)
+> **Attachments:** 3 files uploaded (per-skill references)
 >
 > [Edit any section] [Submit]
 
@@ -1018,7 +1005,7 @@ After completing all sections, the user sees a summary view. **Build this as a d
 - Show ✅ for sections where all required fields are filled.
 - Show ⚠️ for sections with only optional fields empty (valid, just incomplete).
 - Show ❌ for sections with missing required fields (block submission).
-- Show a file count breakdown by type (onboarding docs, per-skill references, framework docs, general reference).
+- Show a file count for per-skill references (the only upload point is AHS 4.8).
 - The Submit button is disabled until all ❌ sections are resolved.
 - On submit, collect all field values as a JSON object keyed by field IDs (1.1, 1.2, ..., 6.4) + a file manifest listing each uploaded file with its field ID, skill index (if applicable), original filename, size, and MIME type.
 
@@ -1034,7 +1021,6 @@ For use by the Filler prompt and Converter prompt. **This table is the contract 
 | 1.2 | Role | Mission Statement | textarea | Yes | ✅ Yes |
 | 1.3 | Role | Key Responsibilities | textarea | Yes | ✅ Yes |
 | 1.4 | Role | Boundaries | textarea | Yes | ✅ Partially |
-| 1.5 | Role | Onboarding Materials | textarea | No | ❌ No |
 | 2.1 | Employer Profile | Your Full Name | text | Yes | ❌ No |
 | 2.2 | Employer Profile | Your Role/Title | text | Yes | ❌ No |
 | 2.3 | Employer Profile | Company Name | text | Yes | ⚠️ Maybe |
@@ -1079,11 +1065,10 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 
 | AHS Field | → Workspace File | Purpose |
 |-----------|-----------------|---------|
-| 1.1 Job Title | IDENTITY.md | Agent name, emoji, avatar |
+| 1.1 Job Title | IDENTITY.md | Agent name |
 | 1.2 Mission | SOUL.md | Core identity, mission section |
 | 1.3 Responsibilities | SOUL.md + AGENTS.md | Scope definition |
 | 1.4 Boundaries | SOUL.md (anti-patterns) | Hard limits |
-| 1.5 Onboarding Materials | SOUL.md + AGENTS.md | Cultural context, onboarding notes |
 | 2.1–2.2 Name, Role | USER.md | Direct fields |
 | 2.3–2.6 Company info | USER.md | Direct fields |
 | 2.7 Timezone | USER.md + SETUP.md | Scheduling |
@@ -1103,7 +1088,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 4.6 Output Audience | skills/{name}/SKILL.md (body) | Context for quality |
 | 4.7 Frequency | skills/{name}/SKILL.md (frontmatter) + SETUP.md | Scheduling |
 | 4.8 Skill Docs | skills/{name}/references/ | Actual files placed as-is |
-| 5.1 Tone | SOUL.md (writing style — embodied, not listed) + IDENTITY.md (Vibe) | Voice & personality |
+| 5.1 Tone | SOUL.md (writing style — embodied, not listed) | Voice & personality |
 | 5.2 Decision Freedom | AGENTS.md + SOUL.md | Autonomy level |
 | 5.3 Daily Routine | SETUP.md (schedule data) | Schedule |
 | 5.4 Escalation Triggers | AGENTS.md + SOUL.md (anti-patterns) | Escalation rules |
@@ -1113,7 +1098,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 5.8 Improvement Areas | SOUL.md | Growth direction |
 | 6.1 Regulations | MEMORY.md (compliance seed) + SOUL.md | Compliance context |
 | 6.2 Frameworks | skills/*/SKILL.md (inside the skill that uses them) | Methodology |
-| 6.3 Reference Materials | MEMORY.md | Domain knowledge seed |
+| 6.3 Reference Materials | SOUL.md | Domain context |
 | 6.4 Anything Else | Most relevant workspace file | Operational context |
 
 ---
@@ -1171,7 +1156,8 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
         "4.4": "Every ticket gets a first response within 2 hours...",
         "4.5": "- Sending a generic response...\n- Miscategorizing priority...",
         "4.6": "Customers receive responses directly. Engineering gets escalations.",
-        "4.7": "Multiple times per day"
+        "4.7": "Multiple times per day",
+        "search_hints": ["zendesk mcp integration", "help desk ticketing api connector"]
       }
     ],
     "5.1": {
@@ -1210,7 +1196,7 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 ```
 
 **Key schema notes for the dev:**
-- `fields.4` is an array of skill objects (2–6 items). Each skill object contains fields 4.1–4.8 (4.8 files are referenced via the `files` array).
+- `fields.4` is an array of skill objects (2–6 items). Each skill object contains fields 4.1–4.8 (4.8 files are referenced via the `files` array) plus `search_hints` (array of keyword phrases for finding MCP/tool integrations on ClawHub — populated by the Filler).
 - `fields.2.4_other` and `fields.2.11_other` are the free-text values when "Other" is selected. `null` when the standard option is chosen.
 - `fields.5.1` is an object with `chips` (array of selected chip labels) and `free_text` (string or null).
 - `fields.5.6` is an object with `choice` (the selected option label) and `other_text` (string when "Other" is chosen, null otherwise).

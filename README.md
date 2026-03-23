@@ -80,7 +80,7 @@ The `convert` command outputs a complete agent workspace:
 ```
 lead-qualifier/
 ├── SOUL.md              # Personality, values, hard limits
-├── IDENTITY.md          # Name, role title, avatar
+├── IDENTITY.md          # Agent name
 ├── AGENTS.md            # Operating manual, boot sequence
 ├── USER.md              # Who the agent works for
 ├── TOOLS.md             # Environment notes (populated at install)
