@@ -91,7 +91,7 @@ You do NOT produce INSTALL.md. That's a universal file maintained separately and
 
     > **OpenClaw Implementation Note:** These limits are specific to the OpenClaw runtime and may vary by platform. They are not part of the AHS standard.
 
-    - SOUL.md: ≤ 8,000 chars (~2,000 words). Anti-patterns get ~60% of this.
+    - SOUL.md: ≤ 12,000 chars (~3,000 words). Anti-patterns get ~60% of this.
     - AGENTS.md: ≤ 5,000 chars (~1,200 words).
     - HEARTBEAT.md: 3–6 items, ≤ 800 chars.
     - USER.md, IDENTITY.md, TOOLS.md, MEMORY.md: ≤ 2,000 chars each.
@@ -713,7 +713,7 @@ If something fails: "Mostly set up, but I couldn't reach [tool]. You may need to
 
 ## 5. Clean Up
 
-After this conversation, delete this file. You won't need it again.
+After this conversation, delete this file manually. OpenClaw does NOT auto-delete BOOTSTRAP.md — if it stays, it can wipe your identity on the next restart. Delete it yourself once you've completed these steps.
 ```
 
 **Rules for BOOTSTRAP.md:**
@@ -763,7 +763,7 @@ Before producing output, verify every item:
 - [ ] SKILL.md files produced for each AHS Section 4 skill (name + description frontmatter only, no metadata line, no "trigger" field — triggers live in the markdown body)
 - [ ] Each SKILL.md is under 1,500 words
 - [ ] No commercial prefixes anywhere
-- [ ] Token budget respected: SOUL.md ≤ 8K chars, AGENTS.md ≤ 5K chars, total ≤ 100K chars
+- [ ] Token budget respected: SOUL.md ≤ 12K chars, AGENTS.md ≤ 5K chars, total ≤ 100K chars
 - [ ] BOOTSTRAP.md is present, ≤ 500 words, uses agent's voice, references correct human name, tools, hours, and top dealbreaker
 
 ---
