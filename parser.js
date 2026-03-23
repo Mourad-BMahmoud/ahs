@@ -34,8 +34,8 @@ export function parseConverterResponse(text, agentId) {
   // Pattern: lines that look like file path headers
   // Matches: ### agent-id/SOUL.md, **agent-id/SOUL.md**, `agent-id/SOUL.md`, etc.
   const headerPattern = new RegExp(
-    `^(?:#{1,4}\\s+|\\*\\*|` + "`" + `|---\\s*)` +
-    `(?:${escapeRegex(agentId)}/)?` +
+    `^(?:#{1,4}\\s+)?(?:\\*\\*|` + "`" + `|---\\s*)?` +
+    `(?:[a-z0-9][a-z0-9-]*/)?` +
     `((?:skills/[\\w-]+/)?(?:SKILL|SOUL|IDENTITY|AGENTS|USER|TOOLS|HEARTBEAT|MEMORY|BOOTSTRAP|SETUP)\\.md)` +
     `(?:\\*\\*|` + "`" + `|\\s*---)?\\s*$`,
     "im"
@@ -75,11 +75,15 @@ function cleanContent(text) {
   let cleaned = text.trim();
 
   // Remove wrapping ```markdown ... ``` or ``` ... ```
+  // For the last file, LLM may append commentary after the closing fence,
+  // so we strip everything from the last ``` onward.
   if (/^```\w*\s*\n/.test(cleaned)) {
     cleaned = cleaned.replace(/^```\w*\s*\n/, "");
-    // Remove trailing fence
-    cleaned = cleaned.replace(/\n```\s*$/, "");
+    cleaned = cleaned.replace(/\n```[\s\S]*$/, "");
   }
+
+  // Remove trailing --- separators (LLM adds these between files)
+  cleaned = cleaned.replace(/\n---\s*$/, "").trim();
 
   return cleaned.trim();
 }
