@@ -105,7 +105,3 @@ export function writeWorkspace(outputDir, parsedFiles) {
 
   return written;
 }
-
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}

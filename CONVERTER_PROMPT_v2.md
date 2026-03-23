@@ -363,7 +363,7 @@ When you receive a heartbeat poll, read HEARTBEAT.md and follow it. If nothing n
 ```
 
 **Rules:**
-- Do NOT list the tools from AHS 2.9 here. Those go in INSTALL.md.
+- Do NOT list the tools from AHS 2.9 here. Those go in SETUP.md.
 - Do NOT put tool connection instructions here. The installing OpenClaw handles connections.
 - This file grows over time as the agent discovers tool-specific things worth noting.
 
@@ -762,7 +762,7 @@ Before producing output, verify every item:
 - [ ] SETUP.md tools section includes **Skill** line for each tool
 - [ ] SKILL.md files produced for each AHS Section 4 skill (name + description frontmatter only, no metadata line, no "trigger" field — triggers live in the markdown body)
 - [ ] Each SKILL.md is under 1,500 words
-- [ ] No `layoff-` prefixes anywhere
+- [ ] No commercial prefixes anywhere
 - [ ] Token budget respected: SOUL.md ≤ 8K chars, AGENTS.md ≤ 5K chars, total ≤ 100K chars
 - [ ] BOOTSTRAP.md is present, ≤ 500 words, uses agent's voice, references correct human name, tools, hours, and top dealbreaker
 

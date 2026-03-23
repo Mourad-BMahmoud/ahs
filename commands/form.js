@@ -95,12 +95,14 @@ export function runForm(opts) {
         const { text } = JSON.parse(body);
         if (!text || !text.trim()) {
           res.statusCode = 400;
+          res.setHeader("Content-Type", "application/json");
           res.end(JSON.stringify({ error: "No text provided" }));
           return;
         }
 
         if (!process.env.AHS_API_KEY || !process.env.AHS_PROVIDER) {
           res.statusCode = 400;
+          res.setHeader("Content-Type", "application/json");
           res.end(JSON.stringify({ error: "LLM not configured. Set AHS_PROVIDER and AHS_API_KEY in your .env file, then restart the form server." }));
           return;
         }
@@ -123,7 +125,15 @@ export function runForm(opts) {
           return;
         }
 
-        const parsed = JSON.parse(jsonMatch[1]);
+        let parsed;
+        try {
+          parsed = JSON.parse(jsonMatch[1]);
+        } catch (parseErr) {
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: "LLM returned malformed JSON. Try again." }));
+          return;
+        }
         writeFileSync(ahsPath, JSON.stringify(parsed, null, 2), "utf-8");
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(parsed));
@@ -163,7 +173,7 @@ export function runForm(opts) {
               saved.push(safeName);
             }
             res.setHeader("Content-Type", "application/json");
-            res.end(JSON.stringify({ ok: true, files: saved, dir: attachDir }));
+            res.end(JSON.stringify({ ok: true, files: saved }));
           } catch (err) {
             res.statusCode = 500;
             res.end(JSON.stringify({ error: err.message }));
@@ -320,7 +330,14 @@ export function runForm(opts) {
       }
 
       // Static files from ui/
-      const reqPath = req.url === "/" ? "/index.html" : decodeURIComponent(req.url.split("?")[0]);
+      let reqPath;
+      try {
+        reqPath = req.url === "/" ? "/index.html" : decodeURIComponent(req.url.split("?")[0]);
+      } catch {
+        res.statusCode = 400;
+        res.end("Bad request");
+        return;
+      }
       const fullPath = resolve(join(uiDir, normalize(reqPath)));
 
       // Prevent directory traversal

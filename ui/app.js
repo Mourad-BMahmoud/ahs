@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Start with 2 skill blocks
   if (skillCount === 0) { addSkill(); addSkill(); }
 
-  updateAllBadges();
+
 });
 
 // ─── Wizard navigation ──────────────────────────────
@@ -100,12 +100,6 @@ function goStep(n) {
 
   currentStep = n;
   window.scrollTo(0, 0);
-}
-
-// Keep old function name for compatibility with onclick handlers
-function goSection(id) {
-  const map = { s1: 1, s2: 2, s3: 3, s4: 4, s5: 5, s6: 6 };
-  goStep(map[id] || 0);
 }
 
 // ─── Tools grid ─────────────────────────────────────
@@ -392,7 +386,7 @@ function setupAutoSave() {
 function scheduleSave() {
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(doSave, 1500);
-  updateAllBadges();
+
 }
 
 async function doSave() {
@@ -703,39 +697,6 @@ function loadFormData(data) {
   });
 }
 
-// ─── Section badges ─────────────────────────────────
-function updateAllBadges() {
-  const v = id => (document.getElementById(id)?.value || "").trim();
-
-  // Section 2: don't count timezone (auto-detected) as user-filled
-  const tz = v("f-2.7");
-  const detectedTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const tzUserFilled = tz && tz !== detectedTz ? tz : (v("f-2.1") || v("f-2.6") ? tz : "");
-
-  const sections = {
-    s1: [v("f-1.1"), v("f-1.2"), v("f-1.3"), v("f-1.4")],
-    s2: [v("f-2.1"), v("f-2.2"), v("f-2.3"), v("f-2.4"), v("f-2.5"), v("f-2.6"), tzUserFilled],
-    s3: [v("f-3.1"), v("f-3.2"), v("f-3.4")],
-    s4: (() => {
-      const names = [];
-      document.querySelectorAll(".skill-name").forEach(el => names.push(el.value.trim()));
-      return names;
-    })(),
-    s5: [selectedDecision, selectedTones.length >= 2 ? "ok" : "", v("f-5.3"), v("f-5.4"), v("f-5.5"), v("f-5.7-freq")],
-    s6: [v("f-6.1"), v("f-6.2"), v("f-6.3"), v("f-6.4")]
-  };
-
-  for (const [sec, fields] of Object.entries(sections)) {
-    const filled = fields.filter(Boolean).length;
-    const total = fields.length;
-    const badge = document.querySelector(`.nav-item[data-section="${sec}"] .badge`);
-    if (!badge) continue;
-    if (filled === 0) { badge.className = "badge empty"; badge.textContent = "empty"; }
-    else if (filled < total) { badge.className = "badge partial"; badge.textContent = `${filled}/${total}`; }
-    else { badge.className = "badge done"; badge.textContent = "done"; }
-  }
-}
-
 // ─── LLM config ─────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -835,7 +796,7 @@ async function runFill() {
 
     // Load the prefilled data into the form
     loadFormData(data);
-    updateAllBadges();
+  
 
     const filled = data.checklist?.filled?.length || 0;
     const needs = data.checklist?.needs_human?.length || 0;
@@ -901,19 +862,6 @@ async function loadUploadedFiles() {
       `<div style="display:flex;align-items:center;gap:6px;padding:2px 0"><span style="font-family:var(--mono);font-size:12px">${f}</span></div>`
     ).join("");
   } catch { list.textContent = ""; }
-}
-
-// ─── Export ─────────────────────────────────────────
-async function saveAndExport() {
-  await doSave();
-  const data = collectFormData();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "ahs.json";
-  a.click();
-  URL.revokeObjectURL(url);
 }
 
 // ─── Generate summary ───────────────────────────────

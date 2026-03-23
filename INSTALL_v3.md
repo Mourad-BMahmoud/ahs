@@ -259,7 +259,7 @@ If the human reports issues after handoff, here's where to look:
 
 **Employee ignores their personality:** SOUL.md may not be loading. Verify the workspace path is correct and the file is in the right location. Restart the gateway to pick up changes.
 
-**Employee doesn't use their skills:** Skills in the workspace's `skills/` directory should be auto-discovered. Check each SKILL.md has valid frontmatter with single-line JSON metadata. Check the skill eligibility list.
+**Employee doesn't use their skills:** Skills in the workspace's `skills/` directory should be auto-discovered. Check each SKILL.md has valid YAML frontmatter with `name` and `description` fields. Check the skill eligibility list.
 
 **Tool connection fails after initial setup:** Credentials may have expired or been rotated. Ask the human for fresh credentials and update the configuration.
 

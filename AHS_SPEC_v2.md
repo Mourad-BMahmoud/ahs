@@ -933,7 +933,7 @@ End of day (4:30pm):
 ## Section 6 — Domain Knowledge
 
 *Section intro shown to user:*
-> Does your employee need to know about specific regulations, frameworks, or industry-specific information? Upload any reference materials that round out their knowledge.
+> Does your employee need to know about specific regulations, frameworks, or industry-specific information? Describe any reference materials that round out their knowledge.
 
 **Dev note:** This section has no required fields. Show a banner at the top: "All fields in this section are optional. Fill what applies to your business."
 
@@ -1081,12 +1081,12 @@ This is for the Converter prompt — which AHS field maps to which workspace fil
 | 3.3 Past Failures | SOUL.md (anti-patterns, stories) | Contextual guardrails |
 | 3.4 Confidentiality | SOUL.md (anti-patterns) + AGENTS.md | Information boundaries |
 | 4.1 Skill Name | skills/{name}/SKILL.md (frontmatter) | Skill identity |
-| 4.2 Triggers | skills/{name}/SKILL.md (frontmatter) | Activation matching |
+| 4.2 When This Skill Is Used | skills/{name}/SKILL.md (body) | Activation context |
 | 4.3 Process Steps | skills/{name}/SKILL.md (body) | Core instructions |
 | 4.4 Quality Bar | skills/{name}/SKILL.md (body) | Success criteria |
 | 4.5 Failure Modes | skills/{name}/SKILL.md (body) | Error prevention |
 | 4.6 Output Audience | skills/{name}/SKILL.md (body) | Context for quality |
-| 4.7 Frequency | skills/{name}/SKILL.md (frontmatter) + SETUP.md | Scheduling |
+| 4.7 Frequency | skills/{name}/SKILL.md (body) + SETUP.md | Scheduling |
 | 4.8 Skill Docs | skills/{name}/references/ | Actual files placed as-is |
 | 5.1 Tone | SOUL.md (writing style — embodied, not listed) | Voice & personality |
 | 5.2 Decision Freedom | AGENTS.md + SOUL.md | Autonomy level |

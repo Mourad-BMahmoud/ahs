@@ -1,3 +1,5 @@
 node_modules/
 .env
 .ahs-debug.txt
+ahs.json
+attachments/

@@ -2,6 +2,7 @@
   "name": "ahs-cli",
   "version": "0.1.0",
   "description": "Agent Hiring Standard — generate OpenClaw workspaces from job postings",
+  "license": "MIT",
   "bin": {
     "ahs": "./bin/ahs.js"
   },
